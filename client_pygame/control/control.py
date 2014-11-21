@@ -76,6 +76,7 @@ class Control(BaseControl):
         BaseControl.__init__(self, width, height)
         # used to control display of individual item information
         self.show_info = False
+        self.moving = False
         return
 
     def pregame_control(self, engine, keys, newkeys, buttons, newbuttons, mouse_position):
@@ -110,30 +111,59 @@ class Control(BaseControl):
         to make changes to the game engine based on the
         user input.
         """
-        
+        new_movement_event = False
         (mouse_x, mouse_y) = mouse_position
-        
-        if pygame.K_UP in newkeys:
+        if pygame.K_w in newkeys and pygame.K_a in newkeys:
+            engine.set_player_direction(225)
+            engine.set_missile_direction(225)
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_w in newkeys and pygame.K_d in newkeys:
+            engine.set_player_direction(315)
+            engine.set_missile_direction(315)
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_s in newkeys and pygame.K_d in newkeys:
+            engine.set_player_direction(45)
+            engine.set_missile_direction(45)
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_s in newkeys and pygame.K_a in newkeys:
+            engine.set_player_direction(135)
+            engine.set_missile_direction(135)
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_w in newkeys:
             engine.set_player_direction(270)
             engine.set_missile_direction(270)
-        elif pygame.K_DOWN in newkeys:
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_s in newkeys:
             engine.set_player_direction(90)
             engine.set_missile_direction(90)
-        elif pygame.K_LEFT in newkeys:
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_a in newkeys:
             engine.set_player_direction(180)
             engine.set_missile_direction(180)
-        elif pygame.K_RIGHT in newkeys:
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_d in newkeys:
             engine.set_player_direction(0)
             engine.set_missile_direction(0)
-
-        if pygame.K_1 in newkeys:
+            if not self.moving:
+                new_movement_event = True
+        elif pygame.K_w not in newkeys and pygame.K_a not in newkeys and pygame.K_s not in newkeys and pygame.K_d not in newkeys and self.moving:
+            new_movement_event = True
+        
+        if new_movement_event and self.moving:
             engine.set_player_speed_stop()
-        elif pygame.K_2 in newkeys:
+        elif new_movement_event and not self.moving:
             engine.set_player_speed_slow()
             
         if pygame.K_q in newkeys:
             engine.set_missile_range_none()
-        elif pygame.K_w in newkeys:
+        elif pygame.K_e in newkeys:
             engine.set_missile_range_short()
 
         if pygame.K_a in newkeys:
