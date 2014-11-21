@@ -157,7 +157,7 @@ class Display(BaseDisplay):
         if self.gamestate != 1:
             self.gamestate = 1
             pygame.mixer.music.stop()
-            pygame.mixer.music.load("centipede.mp3")
+            pygame.mixer.music.load("fight.mp3")
             pygame.mixer.music.play()
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
