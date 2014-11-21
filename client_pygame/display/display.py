@@ -140,12 +140,6 @@ class Display(BaseDisplay):
         This is usually a brief period of time, while waiting for an opponent
         to join the game.
         """
-        
-        if self.gamestate != 1:
-            self.gamestate = 1
-            pygame.mixer.music.stop()
-            pygame.mixer.music.load("centipede.mp3")
-            pygame.mixer.music.play()
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
@@ -160,10 +154,10 @@ class Display(BaseDisplay):
         """
         Draws the display after the game starts.
         """
-        if self.gamestate != 2:
-            self.gamestate = 2
+        if self.gamestate != 1:
+            self.gamestate = 1
             pygame.mixer.music.stop()
-            pygame.mixer.music.load("")
+            pygame.mixer.music.load("centipede.mp3")
             pygame.mixer.music.play()
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
@@ -196,8 +190,8 @@ class Display(BaseDisplay):
         chooses to display the game, and add a game over
         message.
         """
-        if self.gamestate != 3:
-            self.gamestate = 3
+        if self.gamestate != 2:
+            self.gamestate = 2
             pygame.mixer.stop()
             pygame.mixer.music.load("")
             pygame.mixer.music.play()
@@ -214,15 +208,15 @@ class Display(BaseDisplay):
         import os
         if isinstance(event, MissileFireEvent):
             shot = pygame.mixer.Sound(os.path.join(os.getcwd(), "shot.wav"))
-            shot.set_volume(1)
+            shot.set_volume(.5)
             shot.play()
         if isinstance(event, MissileHitEvent):
             hit = pygame.mixer.Sound(os.path.join(os.getcwd(), "hit.wav"))
-            hit.set_volume(2)
+            hit.set_volume(.5)
             hit.play()
         if isinstance(event, MissileMisfireEvent):
             no_mp = pygame.mixer.Sound(os.path.join(os.getcwd(), "no_mp.mp3"))
-            no_mp.set_volume(2)
+            no_mp.set_volume(.5)
             no_mp.play()
 
             
