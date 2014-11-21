@@ -106,6 +106,8 @@ class Display(BaseDisplay):
         self.player_image = pygame.image.load(os.path.join("display", "BasePlayer_up.png"))
         self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
         self.background_image = pygame.image.load(os.path.join("display", "Background001.png"))
+        self.Menu_image = pygame.image.load(os.path.join("display", "Menu.png"))
+        
         return
 
     def paint_pregame(self, surface, control):
@@ -114,7 +116,7 @@ class Display(BaseDisplay):
         """
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
-        surface.blit(self.background_image, (0,0))
+        surface.blit(self.Menu_image, (0,0))
         # text message in center of screen
         s = "Press 'd' for dual player, 's' for single player,"
         self.draw_text_center(surface, s, self.text_color,
