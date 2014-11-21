@@ -106,24 +106,31 @@ class Display(BaseDisplay):
         self.player_image = pygame.image.load(os.path.join("display", "BasePlayer_up.png"))
         self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
         self.background_image = pygame.image.load(os.path.join("display", "Background001.png"))
+        self.gamestate = -1
         return
 
     def paint_pregame(self, surface, control):
         """
         Draws the display before the user selects the game type.
         """
+        if self.gamestate != 0:
+            self.gamestate = 0
+            pygame.mixer.music.load("load.mp3")
+            pygame.mixer.music.set_volume(.20)
+            pygame.mixer.music.play()
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.blit(self.background_image, (0,0))
         # text message in center of screen
-        s = "Press 'd' for dual player,       's' for single player,"
+        s = "Press 'd' for dual player, 's' for single player,"
         self.draw_text_center(surface, s, self.text_color,
                               self.width/2, self.height/2,
                               self.font)
-        s = "'t' for tournament,          'esc' to quit."
+        s = "'4t' for tournament, 'esc' to quit."
         self.draw_text_center(surface, s, self.text_color,
                               self.width/2, self.height/2 + 3*self.font_size/2,
                               self.font)
+
         return
         
     def paint_waiting_for_game(self, surface, engine, control):
@@ -132,6 +139,12 @@ class Display(BaseDisplay):
         This is usually a brief period of time, while waiting for an opponent
         to join the game.
         """
+        
+        if self.gamestate != 1:
+            self.gamestate = 1
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load("centipede.mp3")
+            pygame.mixer.music.play()
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
@@ -146,6 +159,11 @@ class Display(BaseDisplay):
         """
         Draws the display after the game starts.
         """
+        if self.gamestate != 2:
+            self.gamestate = 2
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load("")
+            pygame.mixer.music.play()
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.blit(self.background_image, (0,0))
@@ -177,6 +195,11 @@ class Display(BaseDisplay):
         chooses to display the game, and add a game over
         message.
         """
+        if self.gamestate != 3:
+            self.gamestate = 3
+            pygame.mixer.stop()
+            pygame.mixer.music.load("")
+            pygame.mixer.music.play()
         self.paint_game(surface, engine, control)
         
         s = "Game Over (%s wins!)" % (engine.get_winner_name())
