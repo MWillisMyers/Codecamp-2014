@@ -184,6 +184,20 @@ class Display(BaseDisplay):
         """
         Should process the event and decide if it needs to be displayed, or heard.
         """
+        import os
+        print os.getcwd()
+        if isinstance(event, MissileFireEvent):
+            shot = pygame.mixer.Sound(os.path.join(os.getcwd(), "shot.wav"))
+            shot.set_volume(1)
+            shot.play()
+        if isinstance(event, MissileHitEvent):
+            hit = pygame.mixer.Sound(os.path.join(os.getcwd(), "hit.wav"))
+            hit.set_volume(2)
+            hit.play()
+
+            
+            
+
         return
 
     # The following methods draw appropriate rectangles
