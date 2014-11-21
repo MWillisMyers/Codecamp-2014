@@ -161,6 +161,7 @@ class Display(BaseDisplay):
             pygame.mixer.music.play()
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
+        surface.fill(self.background_color, rect)
         surface.blit(self.background_image, (0,0))
             
         # draw each object
