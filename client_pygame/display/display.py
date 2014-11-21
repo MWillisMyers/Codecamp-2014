@@ -2,7 +2,7 @@
 # This file is where you make the display for your game
 # Make changes and add functions as you need.
 #
-
+import os
 import pygame
 from config import *
 from common.event import *
@@ -103,6 +103,9 @@ class Display(BaseDisplay):
         self.wall_color       = (255, 255, 255)
         self.text_color       = (255, 255, 255)
         self.background_color = (0, 0, 0)
+        self.player_image = pygame.image.load(os.path.join("display", "BasePlayer_up.png"))
+        self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
+        self.background_image = pygame.image.load(os.path.join("display", "Background001.png"))
         return
 
     def paint_pregame(self, surface, control):
@@ -111,7 +114,7 @@ class Display(BaseDisplay):
         """
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
-        surface.fill(self.background_color, rect)
+        surface.blit(self.background_image, (0,0))
         # text message in center of screen
         s = "Press 'd' for dual player, 's' for single player,"
         self.draw_text_center(surface, s, self.text_color,
@@ -145,7 +148,7 @@ class Display(BaseDisplay):
         """
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
-        surface.fill(self.background_color, rect)
+        surface.blit(self.background_image, (0,0))
             
         # draw each object
         objs = engine.get_objects()
@@ -210,7 +213,7 @@ class Display(BaseDisplay):
         Draws walls.
         """
         rect = self.obj_to_rect(obj)
-        pygame.draw.rect(surface, self.wall_color, rect)
+        surface.blit(self.wall_image, (obj.get_px(), obj.get_py()))
         return
         
     def paint_npc(self, surface, engine, control, obj):
@@ -242,9 +245,10 @@ class Display(BaseDisplay):
             rect = self.obj_to_rect(obj)
             if obj.get_oid() == engine.get_player_oid():
                 color = self.player_color
+                image = self.player_image
             else:
                 color = self.opponent_color
-            pygame.draw.rect(surface, color, rect)
+            surface.blit(self.player_image, (obj.get_px(), obj.get_py()))
         return
 
     def paint_game_status(self, surface, engine, control):
