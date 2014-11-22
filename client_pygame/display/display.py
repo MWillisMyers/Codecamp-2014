@@ -160,11 +160,11 @@ class Display(BaseDisplay):
         self.draw_text_center(surface, s, self.text_color,
                               175, 250,
                               self.title_font)
-        s = "Press 'd' for dual player"
+        s = "Press 's' for single player"
         self.draw_text_center(surface, s, self.text_color,
                               175, 270 + 3*self.font_size/2,
                               self.font)
-        s = "Press 's' for single player"
+        s = "Press 'd' for dual player"
         self.draw_text_center(surface, s, self.text_color,
                               175, 280 + 6*self.font_size/2,
                               self.font)
@@ -203,7 +203,7 @@ class Display(BaseDisplay):
             self.gamestate = 1
             pygame.mixer.music.stop()
             pygame.mixer.music.load("fight.mp3")
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
