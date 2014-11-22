@@ -2,6 +2,7 @@
 # This file is where you make the display for your game
 # Make changes and add functions as you need.
 #
+import random
 import os
 import math
 import pygame
@@ -79,6 +80,8 @@ class Display(BaseDisplay):
     BaseDisplay class.  See client/base_display.py.
     
     """
+    def randomizer(self):
+        return random.choice(range(4)) + 1
 
     def __init__(self, width, height):
         """
@@ -161,17 +164,17 @@ class Display(BaseDisplay):
         ]
 
         self.mana_image = [
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana1.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana2.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana3.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana4.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana5.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana6.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana7.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana8.png")),
-        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana9.png")),
         pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana10.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana9.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana8.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana7.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana6.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana5.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana4.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana3.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana2.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana1.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana.png")),
         ]
 
         self.missile_image_up = pygame.image.load(os.path.join("display", "Arrows", "Arrow_up.png"))
@@ -181,7 +184,7 @@ class Display(BaseDisplay):
         self.npc_image1 = pygame.image.load(os.path.join("display", "Eggefant", "eggefant.png"))
         self.npc_image2 = pygame.image.load(os.path.join("display", "Eggefant", "eggefant2.png"))
         self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
-        self.background_image = pygame.image.load(os.path.join("display", "Background001.png"))
+        self.background_image = pygame.image.load(os.path.join("display", "Background00%s.png" % self.randomizer() )) 
         self.Menu_image = pygame.image.load(os.path.join("display", "Menu.png"))
         self.gamestate = -1
         return
