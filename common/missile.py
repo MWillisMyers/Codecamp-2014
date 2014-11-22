@@ -49,6 +49,8 @@ class MissileData(ObjectData):
         return self.power
 
     def set_power(self, power):
+        if power is None:
+            power = 0
         self.power = float(power)
         return
         

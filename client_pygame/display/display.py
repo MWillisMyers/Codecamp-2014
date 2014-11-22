@@ -109,6 +109,7 @@ class Display(BaseDisplay):
         self.text_color       = (255, 255, 255)
         self.background_color = (0, 0, 0)
         self.image_count      = 0
+        self.sword_count = 0
         self.player_image_left1 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkleft_1.png"))
         self.player_image_leftidle = pygame.image.load(os.path.join("display", "Player", "NewPlayer_idleleft.png"))
         self.player_image_left2 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkleft_2.png"))
@@ -191,6 +192,26 @@ class Display(BaseDisplay):
         pygame.image.load(os.path.join("display", "XPBAR", "xpbar_M.png"))
         ]
 
+        self.pxe_image = [
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_1.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_2.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_3.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_4.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_5.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_6.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_7.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_8.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_9.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_10.png")),
+        pygame.image.load(os.path.join("display", "PxBar", "xpbar_M.png"))
+        ]
+
+        self.Sword_image = [
+            pygame.image.load(os.path.join("display", "Loading Sword", "swordgif1.png")),
+            pygame.image.load(os.path.join("display", "Loading Sword", "swordgif2.png")),
+            pygame.image.load(os.path.join("display", "Loading Sword", "swordgif3.png")),
+        ]
+
         self.missile_image_up = pygame.image.load(os.path.join("display", "Arrows", "Arrow_up.png"))
         self.missile_image_down = pygame.image.load(os.path.join("display", "Arrows", "Arrow_down.png"))
         self.missile_image_left = pygame.image.load(os.path.join("display", "Arrows", "Arrow_left.png"))
@@ -248,6 +269,17 @@ class Display(BaseDisplay):
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
+        if self.image_count <= 4:
+            surface.blit(self.Sword_image[0], (0, 0))
+            self.image_count += 1
+        elif 4 < self.image_count <= 9:
+            self.image_count += 1
+            surface.blit(self.Sword_image[1], (0, 0))
+        elif 9 < self.image_count <= 14:
+            self.image_count += 1
+            surface.blit(self.Sword_image[2], (0, 0))
+        if self.image_count > 14:
+            self.image_count = 0
         # text message in center of screen
         s = "Locating a worthy opponent..."
         self.draw_text_center(surface, s, self.text_color,
@@ -386,8 +418,8 @@ class Display(BaseDisplay):
             rect = self.obj_to_rect(obj)
             if obj.get_oid() == engine.get_player_oid():
                 color = self.player_color
-                if obj.get_dx() <= 0:
-                    if abs(obj.get_dx()) > abs(obj.get_dy()):
+                if obj.get_dx() < 0:
+                    if abs(obj.get_dx()) <= abs(obj.get_dy()):
                         #left
                         if self.image_count <= 4:
                             surface.blit(self.player_image_leftidle, (obj.get_px(), obj.get_py()))
@@ -415,7 +447,7 @@ class Display(BaseDisplay):
                             surface.blit(self.player_image_upidle, (obj.get_px(), obj.get_py()))
                             self.image_count = 0
                 elif obj.get_x() > 0:
-                    if abs(obj.get_dx()) > abs(obj.get_dy()):
+                    if abs(obj.get_dx()) <= abs(obj.get_dy()):
                         #right
                         if self.image_count <= 4:
                             surface.blit(self.player_image_rightidle, (obj.get_px(), obj.get_py()))
@@ -522,6 +554,10 @@ class Display(BaseDisplay):
         exp = exp / 4.5
         return self.exp_image[int(math.ceil(exp))]
 
+    def get_pxe_image(self, exp):
+        exp = exp / 4.5
+        return self.exp_image[int(math.ceil(exp))]
+
     def get_mana_image(self, mana):
         if mana > 10.0:
             mana = 10.0
@@ -583,7 +619,7 @@ class Display(BaseDisplay):
                 surface.blit(image, (surface.get_width() / 2 + 10, surface.get_height() - 20))
                 image = self.get_mana_image(obj.get_move_mana())
                 surface.blit(image, (surface.get_width() / 2 + 100, surface.get_height() - 50))
-                image = self.get_exp_image(obj.get_experience())
+                image = self.get_pxe_image(obj.get_experience())
                 surface.blit(image, (surface.get_width() / 2 +150, surface.get_height() -60))
         return
 
