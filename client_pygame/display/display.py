@@ -271,14 +271,14 @@ class Display(BaseDisplay):
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
         if self.image_count <= 4:
-            surface.blit(self.Sword_image[0], (0, 0))
+            surface.blit(self.Sword_image[0], (surface.get_width() / 2 - 90, 75))
             self.image_count += 1
         elif 4 < self.image_count <= 9:
             self.image_count += 1
-            surface.blit(self.Sword_image[1], (0, 0))
+            surface.blit(self.Sword_image[1], (surface.get_width() / 2 - 90, 75))
         elif 9 < self.image_count <= 14:
             self.image_count += 1
-            surface.blit(self.Sword_image[2], (0, 0))
+            surface.blit(self.Sword_image[2], (surface.get_width() / 2 - 90, 75))
         if self.image_count > 14:
             self.image_count = 0
         # text message in center of screen
