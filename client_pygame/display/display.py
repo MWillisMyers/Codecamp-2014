@@ -103,7 +103,10 @@ class Display(BaseDisplay):
         self.wall_color       = (255, 255, 255)
         self.text_color       = (255, 255, 255)
         self.background_color = (0, 0, 0)
-        self.player_image = pygame.image.load(os.path.join("display", "Player", "NewPlayer_idleleft.png"))
+        self.image_count      = 0
+        self.player_image_left1 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkleft1.png"))
+        self.player_image_leftidle = pygame.image.load(os.path.join("display", "Player", "NewPlayer_idleleft.png"))
+        self.player_image_left2 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkleft2.png"))
         self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
         self.background_image = pygame.image.load(os.path.join("display", "Background001.png"))
         self.Menu_image = pygame.image.load(os.path.join("display", "Menu.png"))
@@ -266,7 +269,24 @@ class Display(BaseDisplay):
                 image = self.player_image
             else:
                 color = self.opponent_color
-            surface.blit(self.player_image, (obj.get_px(), obj.get_py()))
+            if obj.get_dx() <= 0:
+                if abs(obj.get_dx()) > abs(obj.get_dy()):
+                    if self.image_count <= 4:
+                        surface.blit(self.player_image_left, (obj.get_px(), obj.get_py()))
+                        self.image_count += 1
+                    elif 4 < self.image_count <= 9:
+                        self.image_count += 1
+                        surface.blit(self.player_image_left, (obj.get_px(), obj.get_py()))
+                    elif 9 < self.image_count <= 14:
+                        self.image_count += 1
+                        surface.blit(self.player_image_left, (obj.get_px(), obj.get_py()))
+                    elif 14 < self.image_count <= 19:
+                        self.image_count += 1
+                        surface.blit(self.player_image_left, (obj.get_px(), obj.get_py()))
+                    if self.image_count > 19:
+                        self.image_count = 0
+
+
         return
 
     def paint_game_status(self, surface, engine, control):
