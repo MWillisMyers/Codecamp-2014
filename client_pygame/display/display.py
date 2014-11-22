@@ -3,6 +3,7 @@
 # Make changes and add functions as you need.
 #
 import os
+import math
 import pygame
 from config import *
 from common.event import *
@@ -129,6 +130,34 @@ class Display(BaseDisplay):
         self.opponent_image_down1 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkdown_1.png"))
         self.opponent_image_downidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idledown.png"))
         self.opponent_image_down2 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkdown_2.png"))
+
+        self.health_images = [
+            pygame.image.load(os.path.join("display", "Health Bar", "HP10.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP9.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP8.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP7.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP6.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP5.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP4.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP3.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP2.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP1.png")),
+            pygame.image.load(os.path.join("display", "Health Bar", "HP0.png")),
+        ]
+
+        self.arrow_images = [
+            None,
+            pygame.image.load(os.path.join("display", "Arrow Count", "1Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "2Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "3Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "4Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "5Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "6Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "7Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "8Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "9Arrow.png")),
+            pygame.image.load(os.path.join("display", "Arrow Count", "10Arrow.png")),
+        ]
 
         self.missile_image_up = pygame.image.load(os.path.join("display", "Arrows", "Arrow_up.png"))
         self.missile_image_down = pygame.image.load(os.path.join("display", "Arrows", "Arrow_down.png"))
@@ -464,6 +493,18 @@ class Display(BaseDisplay):
 
         return
 
+    def get_health_image(self, health):
+        health = health / 3.0
+        # I think this works, please forgive me.
+        # Dear self,
+        #    I was tired and they made me write this.
+        # I apologize.
+        #    - The code monkey
+        return self.health_images[int(math.ceil(health))]
+
+    def get_arrow_image(self, arrows):
+        return self.arrow_images[int(math.ceil(arrows))]
+
     def paint_game_status(self, surface, engine, control):
         """
         This method displays some text in the bottom strip
@@ -485,6 +526,10 @@ class Display(BaseDisplay):
                 position_x = 20
                 position_y = self.height - STATUS_BAR_HEIGHT + 3 * self.font_size / 2
                 self.draw_text_left(surface, s, self.text_color, position_x, position_y, self.font)
+                image = self.get_health_image(obj.get_health())
+                surface.blit(image, (0, surface.get_height() - 50))
+                image = self.get_arrow_image(obj.get_missile_mana())
+                surface.blit(image, (surface.get_width() / 2 - 90, surface.get_height() - 20))
                 
         # display opponent's stats
         oid = engine.get_opponent_oid()
@@ -500,5 +545,10 @@ class Display(BaseDisplay):
                 position_x = 20
                 position_y = self.height - STATUS_BAR_HEIGHT + 6 * self.font_size / 2
                 self.draw_text_left(surface, s, self.text_color, position_x, position_y, self.font)
+                image = self.get_health_image(obj.get_health())
+                surface.blit(image, (surface.get_width() - 50, surface.get_height() - 50))
+                image = self.get_arrow_image(obj.get_missile_mana())
+
+                surface.blit(image, (surface.get_width() / 2 + 10, surface.get_height() - 20))
         return
 
