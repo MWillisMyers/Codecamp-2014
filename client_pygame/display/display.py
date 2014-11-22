@@ -218,7 +218,7 @@ class Display(BaseDisplay):
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
         # text message in center of screen
-        s = "Waiting for opponent to connect."
+        s = "Locating a worthy opponent..."
         self.draw_text_center(surface, s, self.text_color,
                               self.width/2, self.height/2,
                               self.font)
@@ -503,7 +503,7 @@ class Display(BaseDisplay):
         # Dear self,
         #    I was tired and they made me write this.
         # I apologize.
-        #    - The code monkey
+        #    - The code monkey nutz
         return self.health_images[int(math.ceil(health))]
 
     def get_arrow_image(self, arrows):
