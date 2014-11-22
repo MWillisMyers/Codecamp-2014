@@ -106,7 +106,7 @@ MISSILE_MANA_COST_RATE = 2./(math.log(10*MISSILE_POWER_HIGH[0])*math.log(MISSILE
 
 
 # length of time object spends dying
-DYING_TIME = 3.0
+DYING_TIME = 10.0
 # length of time game waits before terminating
 GAME_OVER_TIME = 2.0*DYING_TIME
 
