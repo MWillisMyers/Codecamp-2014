@@ -121,6 +121,7 @@ class Display(BaseDisplay):
         self.player_image_down1 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkdown_1.png"))
         self.player_image_downidle = pygame.image.load(os.path.join("display", "Player", "NewPlayer_idledown.png"))
         self.player_image_down2 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkdown_2.png"))
+        self.tombstone = pygame.image.load(os.path.join("display","Player", ""))
 
         self.opponent_image_left1 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkleft_1.png"))
         self.opponent_image_leftidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idleleft.png"))
@@ -302,16 +303,16 @@ class Display(BaseDisplay):
             pygame.mixer.music.load("end.mp3")
             pygame.mixer.music.play()
         rect = pygame.Rect(0, 0, self.width, self.height)
-        surface.blit(self.Menu_image, (0,0))
-        self.paint_game(surface, engine, control)
-
+        surface.fill(self.background_color, rect)
+        
+        surface.blit( , (0,0))
         if engine.get_opponent_name() == engine.get_winner_name():
             loser = engine.get_name()
         else:
             loser = engine.get_opponent_name()
         
         s = "%s" % (loser)
-        self.draw_text_center(surface, s, self.text_color, int(self.width/2), int(self.height/2), self.font)
+        self.draw_text_center(surface, s, self.text_color, int(self.width/2), int(self.height/2), self.title_font)
         return
 
     def process_event(self, surface, engine, control, event):
