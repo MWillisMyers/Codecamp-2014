@@ -219,10 +219,6 @@ class Display(BaseDisplay):
             no_mp = pygame.mixer.Sound(os.path.join(os.getcwd(), "no_mp.mp3"))
             no_mp.set_volume(.5)
             no_mp.play()
-
-            
-            
-
         return
 
     # The following methods draw appropriate rectangles
