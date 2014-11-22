@@ -160,6 +160,20 @@ class Display(BaseDisplay):
             pygame.image.load(os.path.join("display", "Arrow Count", "10Arrow.png")),
         ]
 
+        self.mana_image = [
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana1.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana2.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana3.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana4.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana5.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana6.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana7.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana8.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana9.png")),
+        pygame.image.load(os.path.join("display", "Movement Mana", "MovementMana10.png")),
+        ]
+
         self.missile_image_up = pygame.image.load(os.path.join("display", "Arrows", "Arrow_up.png"))
         self.missile_image_down = pygame.image.load(os.path.join("display", "Arrows", "Arrow_down.png"))
         self.missile_image_left = pygame.image.load(os.path.join("display", "Arrows", "Arrow_left.png"))
@@ -506,6 +520,9 @@ class Display(BaseDisplay):
         #    - The code monkey
         return self.health_images[int(math.ceil(health))]
 
+    def get_mana_image(self, mana):
+        return self.mana_image[int(math.ceil(mana))]
+
     def get_arrow_image(self, arrows):
         return self.arrow_images[int(math.ceil(arrows))]
 
@@ -527,14 +544,16 @@ class Display(BaseDisplay):
                      obj.get_experience(),
                      obj.get_move_mana(),
                      obj.get_missile_mana())
-                position_x = 20
-                position_y = self.height - STATUS_BAR_HEIGHT + 3 * self.font_size / 2
-                self.draw_text_left(surface, s, self.text_color, position_x, position_y, self.font)
+                #position_x = 20
+                #position_y = self.height - STATUS_BAR_HEIGHT + 3 * self.font_size / 2
+                #self.draw_text_left(surface, s, self.text_color, position_x, position_y, self.font)
                 image = self.get_health_image(obj.get_health())
                 surface.blit(image, (0, surface.get_height() - 50))
                 image = self.get_arrow_image(obj.get_missile_mana())
                 surface.blit(image, (surface.get_width() / 2 - 90, surface.get_height() - 20))
-                
+                image = self.get_mana_image(obj.get_move_mana())
+                surface.blit(image, (surface.get_width() / 2 -150, surface.get_height() -50))
+                                
         # display opponent's stats
         oid = engine.get_opponent_oid()
         if oid > 0: 
@@ -546,13 +565,14 @@ class Display(BaseDisplay):
                      obj.get_experience(),
                      obj.get_move_mana(),
                      obj.get_missile_mana())
-                position_x = 20
-                position_y = self.height - STATUS_BAR_HEIGHT + 6 * self.font_size / 2
-                self.draw_text_left(surface, s, self.text_color, position_x, position_y, self.font)
+                #position_x = 20
+                #position_y = self.height - STATUS_BAR_HEIGHT + 6 * self.font_size / 2
+                #self.draw_text_left(surface, s, self.text_color, position_x, position_y, self.font)
                 image = self.get_health_image(obj.get_health())
                 surface.blit(image, (surface.get_width() - 50, surface.get_height() - 50))
                 image = self.get_arrow_image(obj.get_missile_mana())
-
                 surface.blit(image, (surface.get_width() / 2 + 10, surface.get_height() - 20))
+                image = self.get_mana_image(obj.get_move_mana())
+                surface.blit(image, (surface.get_width() / 2 + 100, surface.get_height() - 50))
         return
 
