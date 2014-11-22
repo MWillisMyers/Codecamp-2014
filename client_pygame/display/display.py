@@ -103,7 +103,7 @@ class Display(BaseDisplay):
         self.wall_color       = (255, 255, 255)
         self.text_color       = (255, 255, 255)
         self.background_color = (0, 0, 0)
-        self.player_image = pygame.image.load(os.path.join("display", "BasePlayer_up.png"))
+        self.player_image = pygame.image.load(os.path.join("display", "Player", "NewPlayer_idleleft.png"))
         self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
         self.background_image = pygame.image.load(os.path.join("display", "Background001.png"))
         self.Menu_image = pygame.image.load(os.path.join("display", "Menu.png"))
