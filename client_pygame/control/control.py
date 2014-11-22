@@ -149,9 +149,9 @@ class Control(BaseControl):
         elif pygame.K_e in newkeys:
             engine.set_missile_range_short()
 
-        if pygame.K_a in newkeys:
+        if pygame.K_z in newkeys:
             engine.set_missile_power_none()
-        elif pygame.K_s in newkeys:
+        elif pygame.K_x in newkeys:
             engine.set_missile_power_low()
                 
         if pygame.K_SPACE in newkeys:
