@@ -122,7 +122,7 @@ class Display(BaseDisplay):
         self.player_image_down1 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkdown_1.png"))
         self.player_image_downidle = pygame.image.load(os.path.join("display", "Player", "NewPlayer_idledown.png"))
         self.player_image_down2 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkdown_2.png"))
-        self.tombstone = pygame.image.load(os.path.join("display","Player", ""))
+        #self.tombstone = pygame.image.load(os.path.join("display", ""))
 
         self.opponent_image_left1 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkleft_1.png"))
         self.opponent_image_leftidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idleleft.png"))
@@ -337,7 +337,7 @@ class Display(BaseDisplay):
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
         
-        surface.blit( , (0,0))
+        #surface.blit( , (0,0))
         if engine.get_opponent_name() == engine.get_winner_name():
             loser = engine.get_name()
         else:
