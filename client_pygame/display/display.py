@@ -180,7 +180,7 @@ class Display(BaseDisplay):
             self.gamestate = 0
             pygame.mixer.music.load("load.mp3")
             pygame.mixer.music.set_volume(.20)
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.blit(self.Menu_image, (0,0))
@@ -507,6 +507,8 @@ class Display(BaseDisplay):
         return self.health_images[int(math.ceil(health))]
 
     def get_arrow_image(self, arrows):
+        if arrows > 10.0:
+            arrows = 10.0
         return self.arrow_images[int(math.ceil(arrows))]
 
     def paint_game_status(self, surface, engine, control):
