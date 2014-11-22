@@ -130,7 +130,10 @@ class Display(BaseDisplay):
         self.opponent_image_downidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idledown.png"))
         self.opponent_image_down2 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkdown_2.png"))
 
-        self.missile_image_player = pygame.image.load(os.path.join("display", "Arrow.png"))
+        self.missile_image_up = pygame.image.load(os.path.join("display", "Arrows", "Arrow_up.png"))
+        self.missile_image_down = pygame.image.load(os.path.join("display", "Arrows", "Arrow_down.png"))
+        self.missile_image_left = pygame.image.load(os.path.join("display", "Arrows", "Arrow_left.png"))
+        self.missile_image_right = pygame.image.load(os.path.join("display", "Arrows", "Arrow_right.png"))
         self.npc_image1 = pygame.image.load(os.path.join("display", "Eggefant", "eggefant.png"))
         self.npc_image2 = pygame.image.load(os.path.join("display", "Eggefant", "eggefant2.png"))
         self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
@@ -279,7 +282,7 @@ class Display(BaseDisplay):
         if obj.is_alive():
             color = self.npc_color
             rect = self.obj_to_rect(obj)
-            pygame.draw.rect(surface, color, rect)
+            surface.blit(self.npc_image1, (obj.get_px(), obj.get_py()))
         return
         
     def paint_missile(self, surface, engine, control, obj):
@@ -287,9 +290,20 @@ class Display(BaseDisplay):
         Draws living missiles.
         """
         if obj.is_alive():
-            color = self.missile_color
             rect = self.obj_to_rect(obj)
-            surface.blit(self.missile_image_player, (obj.get_px(), obj.get_py()))
+            if obj.get_dx() <= 0:
+                    if abs(obj.get_dx()) > abs(obj.get_dy()):
+                        #facing left
+                        surface.blit(self.missile_image_left, (obj.get_px(), obj.get_py()))
+                    else:
+                        #facing up
+                        surface.blit(self.missile_image_up, (obj.get_px(), obj.get_py()))
+            elif abs(obj.get_dx()) > abs(obj.get_dy()):
+                #facing right
+                surface.blit(self.missile_image_right, (obj.get_px(), obj.get_py()))
+            else:
+                #facing down
+                surface.blit(self.missile_image_down, (obj.get_px(), obj.get_py()))
         return
         
     def paint_player(self, surface, engine, control, obj):
