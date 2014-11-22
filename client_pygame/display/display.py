@@ -282,11 +282,18 @@ class Display(BaseDisplay):
         if self.gamestate != 2:
             self.gamestate = 2
             pygame.mixer.stop()
-            pygame.mixer.music.load("")
+            pygame.mixer.music.load("end.mp3")
             pygame.mixer.music.play()
+        rect = pygame.Rect(0, 0, self.width, self.height)
+        surface.blit(self.Menu_image, (0,0))
         self.paint_game(surface, engine, control)
+
+        if engine.get_opponent_name() == engine.get_winner_name():
+            loser = engine.get_name()
+        else:
+            loser = engine.get_opponent_name()
         
-        s = "Game Over (%s wins!)" % (engine.get_winner_name())
+        s = "%s" % (loser)
         self.draw_text_center(surface, s, self.text_color, int(self.width/2), int(self.height/2), self.font)
         return
 
@@ -521,7 +528,10 @@ class Display(BaseDisplay):
         return self.health_images[int(math.ceil(health))]
 
     def get_mana_image(self, mana):
+        if mana > 10.0:
+            mana = 10.0
         return self.mana_image[int(math.ceil(mana))]
+        
 
     def get_arrow_image(self, arrows):
         if arrows > 10.0:

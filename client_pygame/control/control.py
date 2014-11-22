@@ -75,7 +75,7 @@ class Control(BaseControl):
         
         BaseControl.__init__(self, width, height)
         # used to control display of individual item information
-        self.show_info = False
+        self.show_info = True
         return
 
     def pregame_control(self, engine, keys, newkeys, buttons, newbuttons, mouse_position):
