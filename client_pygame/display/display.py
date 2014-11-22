@@ -116,6 +116,23 @@ class Display(BaseDisplay):
         self.player_image_down1 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkdown_1.png"))
         self.player_image_downidle = pygame.image.load(os.path.join("display", "Player", "NewPlayer_idledown.png"))
         self.player_image_down2 = pygame.image.load(os.path.join("display", "Player", "NewPlayer_walkdown_2.png"))
+
+        self.opponent_image_left1 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkleft_1.png"))
+        self.opponent_image_leftidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idleleft.png"))
+        self.opponent_image_left2 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkleft_2.png"))
+        self.opponent_image_right1 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkright_1.png"))
+        self.opponent_image_rightidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idleright.png"))
+        self.opponent_image_right2 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkright_2.png"))
+        self.opponent_image_up1 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkup_1.png"))
+        self.opponent_image_upidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idleup.png"))
+        self.opponent_image_up2 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkup_2.png"))
+        self.opponent_image_down1 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkdown_1.png"))
+        self.opponent_image_downidle = pygame.image.load(os.path.join("display", "Enemy", "Enemy_idledown.png"))
+        self.opponent_image_down2 = pygame.image.load(os.path.join("display", "Enemy", "Enemy_walkdown_2.png"))
+
+        self.missile_image_player = pygame.image.load(os.path.join("display", "Arrow.png"))
+        self.npc_image1 = pygame.image.load(os.path.join("display", "Eggefant", "eggefant.png"))
+        self.npc_image2 = pygame.image.load(os.path.join("display", "Eggefant", "eggefant2.png"))
         self.wall_image = pygame.image.load(os.path.join("display", "Wall.png"))
         self.background_image = pygame.image.load(os.path.join("display", "Background001.png"))
         self.Menu_image = pygame.image.load(os.path.join("display", "Menu.png"))
@@ -263,7 +280,7 @@ class Display(BaseDisplay):
         if obj.is_alive():
             color = self.missile_color
             rect = self.obj_to_rect(obj)
-            pygame.draw.rect(surface, color, rect)
+            surface.blit(self.missile_image_player, (obj.get_px(), obj.get_py()))
         return
         
     def paint_player(self, surface, engine, control, obj):
@@ -275,64 +292,121 @@ class Display(BaseDisplay):
             rect = self.obj_to_rect(obj)
             if obj.get_oid() == engine.get_player_oid():
                 color = self.player_color
-            else:
-                color = self.opponent_color
-            if obj.get_dx() <= 0:
-                if abs(obj.get_dx()) > abs(obj.get_dy()):
-                    #facing left
+                if obj.get_dx() <= 0:
+                    if abs(obj.get_dx()) > abs(obj.get_dy()):
+                        #facing left
+                        if self.image_count <= 4:
+                            surface.blit(self.player_image_leftidle, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        elif 4 < self.image_count <= 9:
+                            self.image_count += 1
+                            surface.blit(self.player_image_left1, (obj.get_px(), obj.get_py()))
+                        elif 9 < self.image_count <= 14:
+                            self.image_count += 1
+                            surface.blit(self.player_image_leftidle, (obj.get_px(), obj.get_py()))
+                        elif 14 < self.image_count <= 19:
+                            self.image_count += 1
+                            surface.blit(self.player_image_left2, (obj.get_px(), obj.get_py()))
+                        if self.image_count > 19:
+                            self.image_count = 0
+                    else:
+                        #facing up
+                        if self.image_count <= 5:
+                            surface.blit(self.player_image_up1, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        if self.image_count <= 10:
+                            surface.blit(self.player_image_up2, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        if self.image_count > 10:
+                            surface.blit(self.player_image_upidle, (obj.get_px(), obj.get_py()))
+                            self.image_count = 0
+                        
+                elif abs(obj.get_dx()) > abs(obj.get_dy()):
+                    #facing right
                     if self.image_count <= 4:
-                        surface.blit(self.player_image_leftidle, (obj.get_px(), obj.get_py()))
+                        surface.blit(self.player_image_rightidle, (obj.get_px(), obj.get_py()))
                         self.image_count += 1
                     elif 4 < self.image_count <= 9:
                         self.image_count += 1
-                        surface.blit(self.player_image_left1, (obj.get_px(), obj.get_py()))
+                        surface.blit(self.player_image_right1, (obj.get_px(), obj.get_py()))
                     elif 9 < self.image_count <= 14:
                         self.image_count += 1
-                        surface.blit(self.player_image_leftidle, (obj.get_px(), obj.get_py()))
+                        surface.blit(self.player_image_rightidle, (obj.get_px(), obj.get_py()))
                     elif 14 < self.image_count <= 19:
                         self.image_count += 1
-                        surface.blit(self.player_image_left2, (obj.get_px(), obj.get_py()))
+                        surface.blit(self.player_image_right2, (obj.get_px(), obj.get_py()))
                     if self.image_count > 19:
                         self.image_count = 0
                 else:
-                    #facing up
+                    #facing down
                     if self.image_count <= 5:
-                        surface.blit(self.player_image_up1, (obj.get_px(), obj.get_py()))
+                        surface.blit(self.player_image_down1, (obj.get_px(), obj.get_py()))
                         self.image_count += 1
                     if self.image_count <= 10:
-                        surface.blit(self.player_image_up2, (obj.get_px(), obj.get_py()))
+                        surface.blit(self.player_image_down2, (obj.get_px(), obj.get_py()))
                         self.image_count += 1
                     if self.image_count > 10:
-                        surface.blit(self.player_image_upidle, (obj.get_px(), obj.get_py()))
+                        surface.blit(self.player_image_downidle, (obj.get_px(), obj.get_py()))
                         self.image_count = 0
-                        
-            elif abs(obj.get_dx()) > abs(obj.get_dy()):
-                #facing right
-                if self.image_count <= 4:
-                    surface.blit(self.player_image_rightidle, (obj.get_px(), obj.get_py()))
-                    self.image_count += 1
-                elif 4 < self.image_count <= 9:
-                    self.image_count += 1
-                    surface.blit(self.player_image_right1, (obj.get_px(), obj.get_py()))
-                elif 9 < self.image_count <= 14:
-                    self.image_count += 1
-                    surface.blit(self.player_image_rightidle, (obj.get_px(), obj.get_py()))
-                elif 14 < self.image_count <= 19:
-                    self.image_count += 1
-                    surface.blit(self.player_image_right2, (obj.get_px(), obj.get_py()))
-                if self.image_count > 19:
-                    self.image_count = 0
             else:
-                #facing down
-                if self.image_count <= 5:
-                    surface.blit(self.player_image_down1, (obj.get_px(), obj.get_py()))
-                    self.image_count += 1
-                if self.image_count <= 10:
-                    surface.blit(self.player_image_down2, (obj.get_px(), obj.get_py()))
-                    self.image_count += 1
-                if self.image_count > 10:
-                    surface.blit(self.player_image_downidle, (obj.get_px(), obj.get_py()))
-                    self.image_count = 0
+                color = self.opponent_color
+                if obj.get_dx() <= 0:
+                    if abs(obj.get_dx()) > abs(obj.get_dy()):
+                        #facing left
+                        if self.image_count <= 4:
+                            surface.blit(self.opponent_image_leftidle, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        elif 4 < self.image_count <= 9:
+                            self.image_count += 1
+                            surface.blit(self.opponent_image_left1, (obj.get_px(), obj.get_py()))
+                        elif 9 < self.image_count <= 14:
+                            self.image_count += 1
+                            surface.blit(self.opponent_image_leftidle, (obj.get_px(), obj.get_py()))
+                        elif 14 < self.image_count <= 19:
+                            self.image_count += 1
+                            surface.blit(self.opponent_image_left2, (obj.get_px(), obj.get_py()))
+                        if self.image_count > 19:
+                            self.image_count = 0
+                    else:
+                        #facing up
+                        if self.image_count <= 5:
+                            surface.blit(self.opponent_image_up1, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        if self.image_count <= 10:
+                            surface.blit(self.opponent_image_up2, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        if self.image_count > 10:
+                            surface.blit(self.opponent_image_upidle, (obj.get_px(), obj.get_py()))
+                            self.image_count = 0
+                            
+                elif abs(obj.get_dx()) > abs(obj.get_dy()):
+                    #facing right
+                    if self.image_count <= 4:
+                        surface.blit(self.opponent_image_rightidle, (obj.get_px(), obj.get_py()))
+                        self.image_count += 1
+                    elif 4 < self.image_count <= 9:
+                        self.image_count += 1
+                        surface.blit(self.opponent_image_right1, (obj.get_px(), obj.get_py()))
+                    elif 9 < self.image_count <= 14:
+                        self.image_count += 1
+                        surface.blit(self.opponent_image_rightidle, (obj.get_px(), obj.get_py()))
+                    elif 14 < self.image_count <= 19:
+                        self.image_count += 1
+                        surface.blit(self.opponent_image_right2, (obj.get_px(), obj.get_py()))
+                    if self.image_count > 19:
+                        self.image_count = 0
+                else:
+                    #facing down
+                    if self.image_count <= 5:
+                        surface.blit(self.opponent_image_down1, (obj.get_px(), obj.get_py()))
+                        self.image_count += 1
+                    if self.image_count <= 10:
+                        surface.blit(self.opponent_image_down2, (obj.get_px(), obj.get_py()))
+                        self.image_count += 1
+                    if self.image_count > 10:
+                        surface.blit(self.opponent_image_downidle, (obj.get_px(), obj.get_py()))
+                        self.image_count = 0
+                
 
         return
 
