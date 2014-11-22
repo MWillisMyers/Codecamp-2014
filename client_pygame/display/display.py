@@ -90,7 +90,8 @@ class Display(BaseDisplay):
         # There are other fonts available, but they are not
         # the same on every computer.  You can read more about
         # fonts at http://www.pygame.org/docs/ref/font.html
-        self.font_size = 12
+        self.title_font = pygame.font.SysFont("Courier new" , 22)
+        self.font_size = 14
         self.font = pygame.font.SysFont("Courier New",self.font_size)
 
         # Colors are specified as a triple of integers from 0 to 255.
@@ -184,22 +185,25 @@ class Display(BaseDisplay):
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.blit(self.Menu_image, (0,0))
         # text message in center of screen
-
-        s = "Press 'd' for dual player"
+        s = "Archers Arena"
         self.draw_text_center(surface, s, self.text_color,
-                              self.width/2, self.height/2,
-                              self.font)
+                              175, 250,
+                              self.title_font)
         s = "Press 's' for single player"
         self.draw_text_center(surface, s, self.text_color,
-                              self.width/2, self.height/2 + 3*self.font_size/2,
+                              175, 270 + 3*self.font_size/2,
+                              self.font)
+        s = "Press 'd' for dual player"
+        self.draw_text_center(surface, s, self.text_color,
+                              175, 280 + 6*self.font_size/2,
                               self.font)
         s = "Press 't' for tournament"
         self.draw_text_center(surface, s, self.text_color,
-                              self.width/2, self.height/2 + 6*self.font_size/2,
+                              175, 290 + 9*self.font_size/2,
                               self.font)
         s = "Press 'esc' to quit"
         self.draw_text_center(surface, s, self.text_color,
-                              self.width/2, self.height/2 + 9*self.font_size/2,
+                              175, 300 + 12*self.font_size/2,
                               self.font)
 
         return
@@ -228,7 +232,7 @@ class Display(BaseDisplay):
             self.gamestate = 1
             pygame.mixer.music.stop()
             pygame.mixer.music.load("fight.mp3")
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
         # background
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)

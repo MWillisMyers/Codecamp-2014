@@ -115,27 +115,51 @@ class Control(BaseControl):
         if pygame.K_w in keys and pygame.K_a in keys:
             engine.set_player_direction(225)
             engine.set_missile_direction(225)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         elif pygame.K_w in keys and pygame.K_d in keys:
             engine.set_player_direction(315)
             engine.set_missile_direction(315)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         elif pygame.K_s in keys and pygame.K_d in keys:
             engine.set_player_direction(45)
             engine.set_missile_direction(45)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         elif pygame.K_s in keys and pygame.K_a in keys:
             engine.set_player_direction(135)
             engine.set_missile_direction(135)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         elif pygame.K_w in keys:
             engine.set_player_direction(270)
             engine.set_missile_direction(270)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         elif pygame.K_s in keys:
             engine.set_player_direction(90)
             engine.set_missile_direction(90)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         elif pygame.K_a in keys:
             engine.set_player_direction(180)
             engine.set_missile_direction(180)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         elif pygame.K_d in keys:
             engine.set_player_direction(0)
             engine.set_missile_direction(0)
+            engine.set_player_speed_slow()
+            engine.set_player_speed_medium()
+            engine.set_player_speed_fast()
         else:
             moving = False
         
@@ -156,6 +180,13 @@ class Control(BaseControl):
                 
         if pygame.K_SPACE in newkeys:
             engine.fire_missile()
+            engine.set_missile_range_short()
+            engine.set_missile_range_medium()
+            engine.set_missile_range_long()
+            engine.set_missile_power_low()
+            engine.set_missile_power_medium()
+            engine.set_missile_power_high()
+
 
         if pygame.K_i in newkeys:
             self.show_info = not self.show_info
