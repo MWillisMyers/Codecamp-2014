@@ -323,7 +323,7 @@ class Display(BaseDisplay):
                             surface.blit(self.player_image_left2, (obj.get_px(), obj.get_py()))
                         if self.image_count > 19:
                             self.image_count = 0
-                    else:
+                    elif obj.get_dy() < -.001 and abs(obj.get_dx()) < .001:
                         #facing up
                         if self.image_count <= 5:
                             surface.blit(self.player_image_up1, (obj.get_px(), obj.get_py()))
@@ -334,7 +334,38 @@ class Display(BaseDisplay):
                         if self.image_count > 10:
                             surface.blit(self.player_image_upidle, (obj.get_px(), obj.get_py()))
                             self.image_count = 0
-                        
+                    elif obj.get_dy() < -.001 and obj.get_dx() > .001:
+                        #up right
+                        if self.image_count <= 4:
+                            surface.blit(self.player_image_rightidle, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        elif 4 < self.image_count <= 9:
+                            self.image_count += 1
+                            surface.blit(self.player_image_right1, (obj.get_px(), obj.get_py()))
+                        elif 9 < self.image_count <= 14:
+                            self.image_count += 1
+                            surface.blit(self.player_image_rightidle, (obj.get_px(), obj.get_py()))
+                        elif 14 < self.image_count <= 19:
+                            self.image_count += 1
+                            surface.blit(self.player_image_right2, (obj.get_px(), obj.get_py()))
+                        if self.image_count > 19:
+                            self.image_count = 0
+                    elif obj.get_dy() > .001 and obj.get_dx() < -.001:
+                        #Left down
+                        if self.image_count <= 4:
+                            surface.blit(self.player_image_leftidle, (obj.get_px(), obj.get_py()))
+                            self.image_count += 1
+                        elif 4 < self.image_count <= 9:
+                            self.image_count += 1
+                            surface.blit(self.player_image_left1, (obj.get_px(), obj.get_py()))
+                        elif 9 < self.image_count <= 14:
+                            self.image_count += 1
+                            surface.blit(self.player_image_leftidle, (obj.get_px(), obj.get_py()))
+                        elif 14 < self.image_count <= 19:
+                            self.image_count += 1
+                            surface.blit(self.player_image_left2, (obj.get_px(), obj.get_py()))
+                        if self.image_count > 19:
+                            self.image_count = 0
                 elif abs(obj.get_dx()) > abs(obj.get_dy()):
                     #facing right
                     if self.image_count <= 4:
@@ -351,7 +382,7 @@ class Display(BaseDisplay):
                         surface.blit(self.player_image_right2, (obj.get_px(), obj.get_py()))
                     if self.image_count > 19:
                         self.image_count = 0
-                else:
+                elif obj.get_dy() > .001 and abs(obj.get_dx()) < .001:
                     #facing down
                     if self.image_count <= 5:
                         surface.blit(self.player_image_down1, (obj.get_px(), obj.get_py()))
